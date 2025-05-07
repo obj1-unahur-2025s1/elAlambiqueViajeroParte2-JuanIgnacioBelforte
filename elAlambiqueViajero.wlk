@@ -139,8 +139,10 @@ object centroInscripcion {
   }
   method cambiarCiudad(nuevaCiudad) {
     ciudad = nuevaCiudad
-    inscriptos.filter({a => a.puedeLlegar(nuevaCiudad)})
-    rechazados.filter({a => a.puedeLlegar(nuevaCiudad)})
+    rechazados.addAll(inscriptos)
+    inscriptos.clear()
+    inscriptos.addAll(rechazados.filter({a => a.puedeLlegar(nuevaCiudad)}))
+    rechazados.removeAll(inscriptos)
   }
   method irALaCarrera() {
     return

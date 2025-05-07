@@ -153,6 +153,15 @@ object centroInscripcion {
 }
 
 object antiguallaBlindada {
-  var velocidad = 10
-  var gangsters = 7
+  var gangsters = ["Juan Triste", "Juan Inalambrico", "Juan Chernobyl", "Juan Callejero", "Juan", "Juan Programador", "Juan Artista"]
+
+  method puedeFuncionar() = gangsters.even()
+  method rapido() = gangsters > 6
+  method desgaste() {
+    gangsters.remove(gangsters.anyOne())
+  }
+  method velocidad() {
+    return
+    gangsters.sum({g => g.size()})
+  }
 }

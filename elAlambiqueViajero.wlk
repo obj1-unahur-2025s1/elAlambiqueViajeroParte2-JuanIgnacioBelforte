@@ -17,10 +17,13 @@ object luke {
 }
 
 object alambiqueVeloz {
+    var velocidad = 10
     var rapido = true
     var combustible = 20
     const consumoPorViaje = 10
     var patente = "AB123JK"
+
+    method velocidad() = velocidad
     method puedeFuncionar() = combustible >= consumoPorViaje
     method desgaste() {
         combustible = combustible - consumoPorViaje
@@ -29,9 +32,13 @@ object alambiqueVeloz {
     method patenteValida() = patente.take(1) == "A"
 }
 
+// --Vehiculos--
 
 object antigualla {
+    var velocidad = 30
     var gangsters = 7
+
+    method velocidad() = velocidad
     method puedeFuncionar() = gangsters.even()
     method rapido() = gangsters > 6
     method desgaste(){
@@ -40,8 +47,11 @@ object antigualla {
     method patenteValida() = chatarra.rapido()
 }
 object chatarra {
+    var velocidad = 5
     var cañones = 10
     var municiones = "ACME"
+
+    method velocidad() = velocidad
     method puedeFuncionar() = municiones == "ACME" and cañones.between(6,12)
     method rapido() = municiones.size() < cañones
     method desgaste(){
@@ -54,7 +64,10 @@ object chatarra {
 }
 
 object convertible {
+    var velocidad = 40
     var convertido = antigualla
+
+    method velocidad() = velocidad
     method puedeFuncionar() = convertido.puedeFuncionar() 
     method rapido() = convertido.rapido()
     method desgaste(){
@@ -67,13 +80,16 @@ object convertible {
 }
 
 object moto {
+    var velocidad = 50
+
+    method velocidad() = velocidad
     method rapido() = true
     method puedeFuncionar() = not self.rapido()
     method desgaste() { }
     method patenteValida() = false
 }
 
-// --Vehiculos--
+// --Ciudades--
 
 object paris {
     method recuerdoTipico() = "Llavero Torre Eiffel"
@@ -126,12 +142,17 @@ object centroInscripcion {
     inscriptos.filter({a => a.puedeLlegar(nuevaCiudad)})
     rechazados.filter({a => a.puedeLlegar(nuevaCiudad)})
   }
-}
-
-object name {
-  
+  method irALaCarrera() {
+    return
+        inscriptos.forEach({a => a.desgaste()})
+  }
+  method ganador() {
+    return
+        inscriptos.max({a => a.velocidad()})
+  }
 }
 
 object antiguallaBlindada {
+  var velocidad = 10
   var gangsters = 7
 }

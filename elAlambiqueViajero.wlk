@@ -1,19 +1,19 @@
-object luke{
-    var cantidadViajes = 0
-    var recuerdo = null
-    var vehiculo = alambiqueVeloz
+object luke {
+  var cantidadViajes = 0
+  var recuerdo = null
+  var vehiculo = alambiqueVeloz
 
-    method cantidadViajes() = cantidadViajes 
+  method cantidadViajes() = cantidadViajes 
 
-    method viajar(lugar){
-        if (lugar.puedeLlegar(vehiculo)) {
-            cantidadViajes = cantidadViajes + 1
-            recuerdo = lugar.recuerdoTipico()
-            vehiculo.desgaste()
-        }
-    }
-    method recuerdo() = recuerdo
-    method vehiculo(nuevo) {vehiculo = nuevo}
+  method viajar(lugar){
+      if (lugar.puedeLlegar(vehiculo)) {
+          cantidadViajes = cantidadViajes + 1
+          recuerdo = lugar.recuerdoTipico()
+          vehiculo.desgaste()
+      }
+  }
+  method recuerdo() = recuerdo
+  method vehiculo(nuevo) {vehiculo = nuevo}
 }
 
 object alambiqueVeloz {
@@ -26,33 +26,9 @@ object alambiqueVeloz {
         combustible = combustible - consumoPorViaje
     }
     method rapido() = rapido
-    method patenteValida() = patente.head() == "A"
+    method patenteValida() = patente.take(1) == "A"
 }
 
-object paris{
-    method recuerdoTipico() = "Llavero Torre Eiffel"
-    method puedeLlegar(movil) =  movil.puedeFuncionar() 
-    
-}
-
-object buenosAires{
-    method recuerdoTipico() = "Mate"
-    method puedeLlegar(auto) =  auto.rapido() 
-}
-
-object bagdad {
-    var recuerdo = "bidon de petroleo"
-    method recuerdoTipico() = recuerdo
-    method recuerdo(nuevo) {recuerdo = nuevo }
-    method puedeLlegar(cualquierCosa) = true
-}
-
-object lasVegas{
-    var homenaje = paris
-    method homenaje(lugar) {homenaje = lugar}
-    method recuerdoTipico() = homenaje.recuerdoTipico()
-    method puedeLlegar(vehiculo) = homenaje.puedeLlegar(vehiculo)
-}
 
 object antigualla {
     var gangsters = 7
@@ -61,8 +37,7 @@ object antigualla {
     method desgaste(){
         gangsters = gangsters -1
     }
-    method patenteValida() = chatarra.rapido() 
-
+    method patenteValida() = chatarra.rapido()
 }
 object chatarra {
     var cañones = 10
@@ -76,10 +51,9 @@ object chatarra {
     }
     method patenteValida() = municiones.take(4) == "ACME" 
     method cañones() = cañones
-
 }
 
-object convertible{
+object convertible {
     var convertido = antigualla
     method puedeFuncionar() = convertido.puedeFuncionar() 
     method rapido() = convertido.rapido()
@@ -90,19 +64,74 @@ object convertible{
         convertido = vehiculo
     }
     method patenteValida() = convertido.patenteValida()
- 
 }
 
-object hurlingham{
+object moto {
+    method rapido() = true
+    method puedeFuncionar() = not self.rapido()
+    method desgaste() { }
+    method patenteValida() = false
+}
+
+// --Vehiculos--
+
+object paris {
+    method recuerdoTipico() = "Llavero Torre Eiffel"
+    method puedeLlegar(movil) =  movil.puedeFuncionar() 
+    
+}
+
+object buenosAires {
+    method recuerdoTipico() = "Mate"
+    method puedeLlegar(auto) =  auto.rapido() 
+}
+
+object bagdad {
+    var recuerdo = "bidon de petroleo"
+    method recuerdoTipico() = recuerdo
+    method recuerdo(nuevo) {recuerdo = nuevo }
+    method puedeLlegar(cualquierCosa) = true
+}
+
+object lasVegas {
+    var homenaje = paris
+    method homenaje(lugar) {homenaje = lugar}
+    method recuerdoTipico() = homenaje.recuerdoTipico()
+    method puedeLlegar(vehiculo) = homenaje.puedeLlegar(vehiculo)
+}
+
+object hurlingham {
    method puedeLlegar(vehiculo) =
      vehiculo.puedeFuncionar() and vehiculo.rapido() and vehiculo.patenteValida()
   method recuerdoTipico() = "sticker de la Unahur"
 }
 
+// Parte 2
 
-object moto{
-    method rapido() = true
-    method puedeFuncionar() = not moto.rapido()
-    method desgaste() { }
-    method patenteValida() = false
+object centroInscripcion {
+  var ciudad = hurlingham
+  const inscriptos = #{}
+  const rechazados = #{}
+
+  method anotar(vehiculo) {
+    if (vehiculo.puedeLlegar(ciudad)) {
+        inscriptos.add(vehiculo)
+    }
+    else {
+        rechazados.add(vehiculo)
+    }
+  }
+  method cambiarCiudad(nuevaCiudad) {
+    ciudad = nuevaCiudad
+    inscriptos.filter({a => a.puedeLlegar(nuevaCiudad)})
+    rechazados.filter({a => a.puedeLlegar(nuevaCiudad)})
+  }
+}
+
+object name {
+  
+}
+
+object antiguallaBlindada {
+  var gangsters = 7
 }
